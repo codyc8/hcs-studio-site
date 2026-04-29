@@ -1,0 +1,755 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HCS — A web &amp; systems studio out of Davis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* === Home-only === */
+  .hero{
+    padding: clamp(40px, 8vh, 96px) var(--pad) clamp(40px, 8vh, 80px);
+    position: relative;
+  }
+  .hero .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 24px;
+    align-items: end;
+    min-height: 70vh;
+  }
+  .hero .meta-l{
+    grid-column: 1 / span 1;
+    align-self: start;
+    padding-top: 8px;
+  }
+  .hero .meta-l .stack{
+    display:flex; flex-direction:column; gap: 14px; max-width: 22ch;
+  }
+  .hero h1{
+    grid-column: 1 / span 4;
+    font-family: var(--serif);
+    font-size: clamp(56px, 10.6vw, 188px);
+    line-height: 0.9;
+    letter-spacing: -0.025em;
+    margin: 0;
+    font-weight: 400;
+  }
+  .hero h1 .it{ font-style: italic; color: var(--ink); }
+  .hero h1 .muted{ color: var(--muted); font-style: italic; }
+  .hero .row-bot{
+    grid-column: 1 / span 4;
+    display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 24px;
+    align-items: end;
+    margin-top: 28px;
+  }
+  .hero .lede{ grid-column: 2 / span 2; }
+  .hero .ctas{
+    grid-column: 4 / span 1;
+    display:flex; flex-direction:column; gap: 12px; align-items:flex-end;
+  }
+  .hero .index-line{
+    grid-column: 1 / span 4;
+    display:flex; justify-content:space-between; align-items:center;
+    border-top: 1px solid var(--rule);
+    padding-top: 14px; margin-top: 28px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* hero rotating word */
+  .rot{
+    display:inline-block; position:relative; min-width: 6ch; vertical-align: baseline;
+  }
+  .rot > span{
+    display:inline-block; transition: transform .6s cubic-bezier(.7,0,.2,1), opacity .5s ease;
+    opacity: 0; transform: translateY(0.6em);
+    position:absolute; left: 0; top: 0;
+    white-space: nowrap;
+    font-style: italic; color: var(--accent);
+  }
+  .rot > span.spacer{ visibility: hidden; opacity: 1; transform:none; position:relative; }
+  .rot > span.in{ opacity: 1; transform: translateY(0); }
+  .rot > span.out{ opacity: 0; transform: translateY(-0.6em); }
+
+  /* services strip */
+  .services{
+    padding: 100px var(--pad);
+    border-top: 1px solid var(--rule);
+  }
+  .services .head{
+    display:grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: end;
+    margin-bottom: 60px;
+  }
+  .services .head h2{
+    font-family: var(--serif); font-size: clamp(40px, 6vw, 88px); line-height: 0.96;
+    letter-spacing: -0.02em; margin: 0; font-weight: 400; max-width: 14ch;
+  }
+  .services .head h2 .it{ font-style: italic; color: var(--muted); }
+  .services-list{ list-style:none; padding:0; margin: 0; border-top: 1px solid var(--rule); }
+  .svc{
+    border-bottom: 1px solid var(--rule);
+    display:grid; grid-template-columns: 80px 1fr 1.2fr 80px;
+    gap: 24px; align-items: center;
+    padding: 28px 0;
+    transition: padding .35s ease;
+    cursor: default;
+  }
+  .svc:hover{ padding-left: 12px; padding-right: 12px; }
+  .svc .num{ font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--muted); }
+  .svc h3{
+    font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 3vw, 44px);
+    margin: 0; letter-spacing: -0.015em; line-height: 1;
+  }
+  .svc p{ color: var(--ink-2); margin: 0; max-width: 50ch; font-size: 15px; }
+  .svc .arrow-cell{ text-align: right; opacity: 0; transition: opacity .25s ease; font-family: var(--mono); font-size: 14px; color: var(--ink); }
+  .svc:hover .arrow-cell{ opacity: 1; }
+
+  /* work tiles */
+  .work{
+    padding: 120px var(--pad) 40px;
+    border-top: 1px solid var(--rule);
+  }
+  .work .head{
+    display:grid; grid-template-columns: 1fr auto; align-items: end; gap: 40px;
+    margin-bottom: 56px;
+  }
+  .work .head h2{
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(48px, 8vw, 128px); line-height: 0.95; letter-spacing: -0.025em;
+    margin: 0;
+  }
+  .work .head h2 .it{ font-style: italic; }
+  .work .head h2 .muted{ color: var(--muted); font-style: italic; }
+  .work-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px 32px;
+  }
+
+  .tile{
+    display:block; position:relative;
+  }
+  .tile .frame{
+    position:relative; aspect-ratio: 4/3; overflow:hidden;
+    border-radius: 8px;
+    border: 1px solid var(--rule);
+    background: var(--panel-2);
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .tile:hover .frame{ transform: translateY(-4px); }
+  .tile .frame .ph-art{ position:absolute; inset:0; }
+  .tile .meta{
+    display:flex; justify-content:space-between; align-items:flex-end; gap: 24px;
+    padding: 18px 4px 4px;
+  }
+  .tile .meta .name{
+    font-family: var(--serif); font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 1; letter-spacing: -0.015em;
+  }
+  .tile .meta .name .it{ font-style: italic; color: var(--muted); }
+  .tile .meta .tags{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); text-align: right;
+  }
+  .tile .meta .tags strong{ color: var(--ink-2); font-weight: 400; }
+  .tile .num{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  /* placeholder art per project */
+  .art-allthings{
+    background:
+      radial-gradient(120% 80% at 30% 20%, rgba(201,168,107,0.18), transparent 60%),
+      linear-gradient(180deg, #1a2030 0%, #0c1018 100%);
+  }
+  .art-allthings::before{
+    content:""; position:absolute; inset:0;
+    background:
+      repeating-linear-gradient(0deg, rgba(232,230,225,0.06) 0 1px, transparent 1px 64px),
+      repeating-linear-gradient(90deg, rgba(232,230,225,0.06) 0 1px, transparent 1px 64px);
+  }
+  .art-allthings::after{
+    content:"AT/D"; position:absolute; left: 32px; top: 32px;
+    font-family: var(--serif); font-style: italic; font-size: clamp(48px, 9vw, 120px);
+    color: var(--ink); line-height:1;
+  }
+  .art-robin{
+    background: linear-gradient(180deg, #0f141d 0%, #161b27 100%);
+  }
+  .art-robin .robin-card{
+    position:absolute; inset: 12% 14% 14% 12%;
+    border: 1px solid var(--rule-strong); border-radius: 10px; padding: 16px;
+    background: rgba(20,24,32,0.85);
+    display:grid; grid-template-rows: auto 1fr; gap: 12px;
+  }
+  .art-robin .row{ display:flex; gap: 8px; }
+  .art-robin .pill{
+    height: 18px; border-radius: 4px; background: rgba(232,230,225,0.08); flex: 1;
+  }
+  .art-robin .pill.hot{ background: rgba(201,168,107,0.4); flex: .5; }
+  .art-robin .chart{
+    position:relative; border: 1px solid var(--rule); border-radius: 6px;
+    background: rgba(232,230,225,0.02);
+  }
+  .art-robin .chart svg{ position:absolute; inset:0; width:100%; height:100%; }
+
+  .art-mysi{
+    background: linear-gradient(180deg, #1c1816 0%, #0f0d0c 100%);
+  }
+  .art-mysi::before{
+    content:""; position:absolute; inset: 12%;
+    background:
+      linear-gradient(180deg, rgba(232,230,225,0.05) 0 1px, transparent 1px) 0 0/100% 18px,
+      linear-gradient(90deg, rgba(232,230,225,0.05) 0 1px, transparent 1px) 0 0/18px 100%;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+  .art-mysi::after{
+    content:"My·SI"; position:absolute; right: 36px; bottom: 30px;
+    font-family: var(--serif); font-style: italic; font-size: clamp(36px, 6vw, 80px);
+    color: var(--accent);
+  }
+
+  .art-vas{
+    background:
+      radial-gradient(80% 60% at 80% 20%, rgba(124,138,160,0.25), transparent 60%),
+      linear-gradient(180deg, #11161e 0%, #0a0d12 100%);
+  }
+  .art-vas::before{
+    content:""; position:absolute; left: 8%; right: 8%; top: 18%; bottom: 18%;
+    border: 1px solid var(--rule-strong);
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba(232,230,225,0.04), transparent);
+  }
+  .art-vas::after{
+    content:"VAS — interpret."; position:absolute; left: 36px; bottom: 28px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .art-logistics{
+    background: linear-gradient(180deg, #0c1116 0%, #0a0e13 100%);
+  }
+  .art-logistics svg{ position:absolute; inset:0; width:100%; height:100%; opacity: .85; }
+  .art-logistics::after{
+    content:"LIVE • route 0392"; position:absolute; right: 28px; top: 24px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--accent);
+  }
+
+  /* process — scroll-driven */
+  .process{
+    padding: 140px var(--pad) 100px;
+    border-top: 1px solid var(--rule);
+  }
+  .process .wrap{
+    display:grid; grid-template-columns: 1fr 1.4fr; gap: 60px;
+    align-items: start;
+  }
+  .process h2{
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(40px, 6vw, 96px); line-height: 0.96;
+    letter-spacing: -0.02em; margin: 0; max-width: 9ch;
+  }
+  .process h2 .it{ font-style: italic; color: var(--muted); }
+  .process .sticky-stage{
+    position: sticky; top: 80px; height: min(80vh, 720px);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--panel-2);
+  }
+  .stage-canvas{
+    position:absolute; inset: 0;
+    display: grid; place-items: center;
+    padding: 40px;
+  }
+  .stage-step{
+    position: absolute; inset: 0; padding: 56px;
+    opacity: 0; transition: opacity .6s ease, transform .6s ease;
+    display:flex; flex-direction: column; justify-content: space-between;
+    transform: translateY(16px);
+  }
+  .stage-step.active{ opacity: 1; transform: none; }
+  .stage-step .label{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stage-step h3{
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(48px, 7vw, 112px); line-height: 0.95; margin: 12px 0 0;
+    letter-spacing: -0.02em;
+  }
+  .stage-step h3 .it{ font-style: italic; color: var(--accent); }
+  .stage-step p{ color: var(--ink-2); max-width: 42ch; margin: 24px 0 0; font-size: 16px; }
+  .stage-progress{
+    position:absolute; left: 24px; right: 24px; bottom: 24px; height: 1px;
+    background: var(--rule);
+  }
+  .stage-progress .bar{
+    position:absolute; left:0; top: 0; height: 100%; background: var(--accent);
+    transition: width .25s ease;
+  }
+  .process-steps{ display:flex; flex-direction: column; gap: 0; }
+  .process-step{
+    border-top: 1px solid var(--rule);
+    padding: 28px 0;
+    display:grid; grid-template-columns: 64px 1fr; gap: 18px; align-items: baseline;
+    transition: opacity .3s ease;
+  }
+  .process-step:last-child{ border-bottom: 1px solid var(--rule); }
+  .process-step .n{ font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
+  .process-step h4{
+    font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 2.4vw, 36px);
+    margin: 0 0 8px; letter-spacing: -0.015em;
+  }
+  .process-step p{ font-size: 14px; color: var(--ink-2); margin: 0; max-width: 50ch; }
+  .process-step.dim{ opacity: .35; }
+
+  /* why hcs */
+  .why{
+    padding: 120px var(--pad);
+    border-top: 1px solid var(--rule);
+  }
+  .why .head{
+    display:grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: end;
+    margin-bottom: 60px;
+  }
+  .why h2{
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(40px, 6vw, 88px); line-height: 0.95;
+    margin: 0; letter-spacing: -0.02em; max-width: 12ch;
+  }
+  .why h2 .it{ font-style: italic; color: var(--muted); }
+  .why .grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .why-card{
+    border-right: 1px solid var(--rule);
+    padding: 32px 24px 32px 0;
+    display:flex; flex-direction:column; gap: 16px; min-height: 240px;
+  }
+  .why-card:last-child{ border-right: none; }
+  .why-card .num{ font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
+  .why-card h3{
+    font-family: var(--serif); font-weight: 400; font-size: 28px; line-height: 1.05;
+    letter-spacing: -0.01em; margin: 0;
+  }
+  .why-card p{ font-size: 14px; color: var(--ink-2); margin: 0; }
+
+  /* contact split */
+  .contact{
+    padding: 140px var(--pad);
+    border-top: 1px solid var(--rule);
+  }
+  .contact .head{
+    text-align: center; margin-bottom: 80px;
+  }
+  .contact .head .eyebrow{ display:block; margin-bottom: 24px; }
+  .contact .head h2{
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(56px, 10vw, 168px); line-height: 0.92;
+    letter-spacing: -0.025em; margin: 0;
+  }
+  .contact .head h2 .it{ font-style: italic; color: var(--muted); }
+  .contact-split{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
+  }
+  .contact-card{
+    padding: 56px 48px;
+    display:flex; flex-direction:column; gap: 24px;
+    transition: background .3s ease;
+    cursor: pointer;
+  }
+  .contact-card + .contact-card{ border-left: 1px solid var(--rule); }
+  .contact-card:hover{ background: var(--panel-2); }
+  .contact-card .eyebrow{ display:block; }
+  .contact-card h3{
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(36px, 4.4vw, 64px); line-height: 0.96;
+    margin: 0; letter-spacing: -0.02em;
+  }
+  .contact-card h3 .it{ font-style: italic; color: var(--accent); }
+  .contact-card p{ color: var(--ink-2); max-width: 36ch; margin: 0; font-size: 15px; }
+  .contact-card .gobtn{
+    margin-top: auto;
+    display:inline-flex; align-items:center; gap: 10px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink);
+  }
+  .contact-card .gobtn::after{
+    content: ""; width: 28px; height: 1px; background: currentColor;
+    transition: width .3s ease;
+  }
+  .contact-card:hover .gobtn::after{ width: 56px; }
+
+  /* responsive */
+  @media (max-width: 1100px){
+    .work-grid{ grid-template-columns: 1fr 1fr; }
+    .why .grid{ grid-template-columns: 1fr 1fr; }
+    .why-card{ border-right: none; border-bottom: 1px solid var(--rule); }
+    .process .wrap{ grid-template-columns: 1fr; }
+    .process .sticky-stage{ position: relative; top: 0; height: 60vh; }
+    .contact-split{ grid-template-columns: 1fr; }
+    .contact-card + .contact-card{ border-left: none; border-top: 1px solid var(--rule); }
+    .hero .grid{ grid-template-columns: 1fr 1fr; }
+    .hero h1, .hero .row-bot, .hero .index-line{ grid-column: 1 / -1; }
+    .hero .row-bot{ grid-template-columns: 1fr; }
+    .hero .ctas{ grid-column: auto; align-items: flex-start; }
+    .services .head{ grid-template-columns: 1fr; }
+    .work .head{ grid-template-columns: 1fr; }
+    .why .head{ grid-template-columns: 1fr; }
+    .svc{ grid-template-columns: 40px 1fr 1.2fr; }
+    .svc .arrow-cell{ display:none; }
+  }
+  @media (max-width: 720px){
+    .work-grid{ grid-template-columns: 1fr; }
+    .why .grid{ grid-template-columns: 1fr; }
+    .svc{ grid-template-columns: 32px 1fr; }
+    .svc p{ display:none; }
+  }
+</style>
+</head>
+<body data-screen-label="01 Home">
+
+<div id="nav-mount"></div>
+
+<!-- HERO -->
+<section class="hero" data-screen-label="Hero">
+  <div class="grid">
+    <div class="meta-l">
+      <div class="stack">
+        <span class="eyebrow">HCS — Index No. 001</span>
+        <span class="small">A web &amp; systems studio<br/>founded by UC Davis students,<br/>engineered locally.</span>
+        <span class="eyebrow" style="margin-top:8px;">Est. 2024 — Vol. I</span>
+      </div>
+    </div>
+
+    <h1 class="display" id="heroline">
+      <span data-line>Websites that</span><br/>
+      <span data-line>make your business</span><br/>
+      <span data-line>look as good as it</span><br/>
+      <span data-line><span class="muted">actually</span> <span class="rot" id="rot" aria-hidden="true">
+        <span class="spacer">is.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="in">is.</span>
+      </span></span>
+    </h1>
+
+    <div class="row-bot">
+      <p class="lede">
+        We design, build, host, and quietly run polished websites &amp; custom systems for small businesses — so you never have to think about your website again.
+      </p>
+      <div class="ctas">
+        <a href="contact.html#mockup" class="btn mag" data-hot>Request a mockup <span class="arrow"></span></a>
+        <a href="contact.html#book" class="btn btn--ghost mag" data-hot>Book a call <span class="arrow"></span></a>
+      </div>
+    </div>
+
+    <div class="index-line">
+      <span>Davis, CA · 38°33′N 121°44′W</span>
+      <span>Scroll to see our work</span>
+      <span>Index 001 / Vol. I</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Custom websites <span class="dot"></span> <span class="it">redesigns</span> <span class="dot"></span> Internal dashboards <span class="dot"></span> <span class="it">CRM &amp; workflow</span> <span class="dot"></span> Hosting &amp; care <span class="dot"></span> <span class="it">Engineered locally in Davis</span> <span class="dot"></span></span>
+    <span>Custom websites <span class="dot"></span> <span class="it">redesigns</span> <span class="dot"></span> Internal dashboards <span class="dot"></span> <span class="it">CRM &amp; workflow</span> <span class="dot"></span> Hosting &amp; care <span class="dot"></span> <span class="it">Engineered locally in Davis</span> <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services reveal" data-screen-label="Services">
+  <div class="head">
+    <span class="eyebrow">§ 02 — What we do</span>
+    <h2 class="display">Whole-stack craft, <span class="it">handled.</span></h2>
+  </div>
+  <ul class="services-list">
+    <li class="svc"><span class="num">01</span><h3>Custom Websites</h3><p>Bespoke marketing sites built around your brand, your audience, and your offer — never templates.</p><span class="arrow-cell">→</span></li>
+    <li class="svc"><span class="num">02</span><h3>Redesigns</h3><p>Take an outdated site and turn it into something that earns trust the moment a visitor lands.</p><span class="arrow-cell">→</span></li>
+    <li class="svc"><span class="num">03</span><h3>Landing Pages</h3><p>Sharp, focused single-page experiences for launches, campaigns, and lead capture.</p><span class="arrow-cell">→</span></li>
+    <li class="svc"><span class="num">04</span><h3>Internal Dashboards</h3><p>Unified executive views and operations tools that pull together everything you actually need to see.</p><span class="arrow-cell">→</span></li>
+    <li class="svc"><span class="num">05</span><h3>CRM &amp; Workflow Systems</h3><p>Lead funnels, pipelines, and quiet automations that keep the back-office moving on its own.</p><span class="arrow-cell">→</span></li>
+    <li class="svc"><span class="num">06</span><h3>Hosting &amp; Care</h3><p>We host it, monitor it, update it, and answer the phone when something needs to change.</p><span class="arrow-cell">→</span></li>
+  </ul>
+</section>
+
+<!-- WORK -->
+<section class="work reveal" data-screen-label="Work">
+  <div class="head">
+    <div>
+      <span class="eyebrow">§ 03 — Selected Work</span>
+      <h2 class="display" style="margin-top: 18px;">Five quiet <span class="it">wins.</span></h2>
+    </div>
+    <a href="work.html" class="btn btn--ghost mag" data-hot>All projects <span class="arrow"></span></a>
+  </div>
+
+  <div class="work-grid" id="workGrid">
+
+    <a class="tile" href="work/robin.html">
+      <div class="num">— Case Study 001</div>
+      <div class="frame ph">
+        <div class="ph-art art-robin">
+          <div class="robin-card">
+            <div class="row"><div class="pill hot"></div><div class="pill"></div><div class="pill"></div></div>
+            <div class="chart">
+              <svg viewBox="0 0 200 80" preserveAspectRatio="none"><polyline fill="none" stroke="#c9a86b" stroke-width="1.2" points="0,60 20,55 40,58 60,40 80,42 100,30 120,33 140,22 160,28 180,15 200,18"/><polyline fill="none" stroke="rgba(232,230,225,0.35)" stroke-width="1" points="0,70 30,65 60,55 90,52 120,45 150,38 180,32 200,28"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">Robin <span class="it">— exec dashboard</span></div>
+        <div class="tags">tryrobin.com<br/><strong>Dashboard · Integrations</strong></div>
+      </div>
+    </a>
+
+    <a class="tile" href="work.html#allthings">
+      <div class="num">— Case Study 002</div>
+      <div class="frame ph">
+        <div class="ph-art art-allthings"></div>
+      </div>
+      <div class="meta">
+        <div class="name">All Things Design <span class="it">— main site</span></div>
+        <div class="tags">Davis, CA<br/><strong>Brand · Web</strong></div>
+      </div>
+    </a>
+
+    <a class="tile" href="work.html#mysi">
+      <div class="num">— Case Study 003</div>
+      <div class="frame ph">
+        <div class="ph-art art-mysi"></div>
+      </div>
+      <div class="meta">
+        <div class="name">MySI <span class="it">— LMS &amp; CRM</span></div>
+        <div class="tags">Online education<br/><strong>LMS · CRM · Funnel</strong></div>
+      </div>
+    </a>
+
+    <a class="tile" href="work.html#vas">
+      <div class="num">— Case Study 004</div>
+      <div class="frame ph">
+        <div class="ph-art art-vas"></div>
+      </div>
+      <div class="meta">
+        <div class="name">VAS Interpretation <span class="it">— staff system</span></div>
+        <div class="tags">Los Angeles, CA<br/><strong>Auth · Operations</strong></div>
+      </div>
+    </a>
+
+    <a class="tile" href="work.html#logistics" style="grid-column: 1 / -1;">
+      <div class="num">— Case Study 005</div>
+      <div class="frame ph" style="aspect-ratio: 21/9;">
+        <div class="ph-art art-logistics">
+          <svg viewBox="0 0 800 240" preserveAspectRatio="none">
+            <defs>
+              <pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M40 0H0V40" fill="none" stroke="rgba(232,230,225,0.06)" stroke-width="1"/>
+              </pattern>
+            </defs>
+            <rect width="800" height="240" fill="url(#g)"/>
+            <path d="M30 200 C 150 80, 280 220, 420 130 S 680 60, 770 100" fill="none" stroke="#c9a86b" stroke-width="1.4" stroke-dasharray="3 4"/>
+            <circle cx="30" cy="200" r="4" fill="#e8e6e1"/>
+            <circle cx="420" cy="130" r="4" fill="#e8e6e1"/>
+            <circle cx="770" cy="100" r="6" fill="#c9a86b"/>
+          </svg>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="name">Logistics Co. <span class="it">— CRM + live tracking</span></div>
+        <div class="tags">Confidential client<br/><strong>CRM · Real-time</strong></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process" data-screen-label="Process">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">§ 04 — How we work</span>
+      <h2 class="display" style="margin-top: 18px;">Five steps, <span class="it">no surprises.</span></h2>
+
+      <div class="process-steps" id="processSteps">
+        <div class="process-step" data-step="0">
+          <span class="n">/01</span>
+          <div><h4>Discovery</h4><p>Short call. We learn the business, the audience, the offer, and what success actually looks like.</p></div>
+        </div>
+        <div class="process-step dim" data-step="1">
+          <span class="n">/02</span>
+          <div><h4>Concept &amp; Mockup</h4><p>You see something real within days — design directions tailored to your brand, not stock layouts.</p></div>
+        </div>
+        <div class="process-step dim" data-step="2">
+          <span class="n">/03</span>
+          <div><h4>Build</h4><p>We engineer fast, accessible, custom front-ends and any back-of-house systems you need.</p></div>
+        </div>
+        <div class="process-step dim" data-step="3">
+          <span class="n">/04</span>
+          <div><h4>Refine</h4><p>One concentrated revision pass. Copy, motion, edge cases — everything tightened until it sings.</p></div>
+        </div>
+        <div class="process-step dim" data-step="4">
+          <span class="n">/05</span>
+          <div><h4>Launch &amp; Manage</h4><p>We launch, host, monitor, and quietly maintain. You keep running your business — we keep the site honest.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sticky-stage" id="processStage" data-screen-label="Process Stage">
+      <div class="stage-canvas">
+        <div class="stage-step active" data-step="0">
+          <span class="label">Step 01 / Discovery</span>
+          <div>
+            <h3 class="display"><span class="it">Listen</span><br/>first.</h3>
+            <p>One call, no pitch. We learn what your customers actually walk in for, what your brand stands for, and where the website is getting in the way.</p>
+          </div>
+        </div>
+        <div class="stage-step" data-step="1">
+          <span class="label">Step 02 / Concept</span>
+          <div>
+            <h3 class="display"><span class="it">Show,</span><br/>not tell.</h3>
+            <p>Within a week you see real screens — custom typography, layout, voice. No mood boards, no theory. Real pixels you can react to.</p>
+          </div>
+        </div>
+        <div class="stage-step" data-step="2">
+          <span class="label">Step 03 / Build</span>
+          <div>
+            <h3 class="display"><span class="it">Engineer</span><br/>the thing.</h3>
+            <p>We hand-code the front-end and stand up any dashboards, CRMs, or automations the work needs. Fast, accessible, clean.</p>
+          </div>
+        </div>
+        <div class="stage-step" data-step="3">
+          <span class="label">Step 04 / Refine</span>
+          <div>
+            <h3 class="display"><span class="it">Polish</span><br/>the seams.</h3>
+            <p>One concentrated revision pass — copy, motion, edge cases. The 5% that turns a good site into one that feels permanent.</p>
+          </div>
+        </div>
+        <div class="stage-step" data-step="4">
+          <span class="label">Step 05 / Launch &amp; Manage</span>
+          <div>
+            <h3 class="display"><span class="it">Quiet</span><br/>operations.</h3>
+            <p>We host it, monitor it, update it, and pick up the phone. The site keeps working. You stop thinking about it.</p>
+          </div>
+        </div>
+      </div>
+      <div class="stage-progress"><div class="bar" id="stageBar" style="width: 20%;"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why reveal" data-screen-label="Why HCS">
+  <div class="head">
+    <h2 class="display">Why <span class="it">HCS.</span></h2>
+    <p class="lede">Most studios hand you the keys and walk away. We don't. We build the right thing for your business, then we keep it running so you never have to worry about it again.</p>
+  </div>
+  <div class="grid">
+    <div class="why-card"><span class="num">/01</span><h3>Tailored to your business.</h3><p>No template economy. Your scope, your audience, your budget — the build adjusts.</p></div>
+    <div class="why-card"><span class="num">/02</span><h3>Premium design.</h3><p>Editorial typography, careful motion, real attention to brand. The site does the talking.</p></div>
+    <div class="why-card"><span class="num">/03</span><h3>Done-for-you delivery.</h3><p>Design, copy, build, launch, hosting, ongoing updates. One studio, one phone number.</p></div>
+    <div class="why-card"><span class="num">/04</span><h3>Scalable systems.</h3><p>From a one-page site to a full LMS or operations tool — we grow with you, not around you.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact reveal" data-screen-label="Contact">
+  <div class="head">
+    <span class="eyebrow">§ 06 — Engage</span>
+    <h2 class="display">Two ways <span class="it">in.</span></h2>
+  </div>
+  <div class="contact-split">
+    <a class="contact-card" href="contact.html#mockup">
+      <span class="eyebrow">Primary</span>
+      <h3 class="display">Request <span class="it">a mockup.</span></h3>
+      <p>Tell us about your business. Within days we'll send back a real, branded mockup &mdash; not a wireframe &mdash; and walk you through it on a call. No commitment.</p>
+      <span class="gobtn">Send a brief</span>
+    </a>
+    <a class="contact-card" href="contact.html#book">
+      <span class="eyebrow">Secondary</span>
+      <h3 class="display">Book <span class="it">a call.</span></h3>
+      <p>Prefer to talk first? 30 minutes on the phone. We learn your business, walk through what's possible, and you leave with a written next step.</p>
+      <span class="gobtn">Open scheduler</span>
+    </a>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="partials.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML = HCS.nav('home');
+  document.getElementById('footer-mount').innerHTML = HCS.footer();
+</script>
+<script src="shared.js"></script>
+
+<script>
+// Hero rotating word
+(function(){
+  const words = ["is.","feels.","earns.","performs.","sells."];
+  const rot = document.getElementById('rot');
+  if (!rot) return;
+  let i = 0;
+  let live = rot.querySelector('span.in');
+  function next(){
+    i = (i + 1) % words.length;
+    const incoming = document.createElement('span');
+    incoming.textContent = words[i];
+    rot.appendChild(incoming);
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        incoming.classList.add('in');
+        if (live) {
+          live.classList.remove('in');
+          live.classList.add('out');
+          const dead = live;
+          setTimeout(()=> dead.remove(), 700);
+        }
+        live = incoming;
+      });
+    });
+  }
+  setInterval(next, 2400);
+})();
+
+// Process scroll-driven animation
+(function(){
+  const stage = document.getElementById('processStage');
+  const steps = document.querySelectorAll('.stage-step');
+  const items = document.querySelectorAll('.process-step');
+  const bar = document.getElementById('stageBar');
+  if (!stage) return;
+  const section = document.getElementById('process');
+
+  function update(){
+    const rect = section.getBoundingClientRect();
+    const winH = window.innerHeight;
+    // total scrollable distance within section: from when its top hits ~10vh to when its bottom passes
+    const total = rect.height - winH;
+    const scrolled = Math.min(Math.max(-rect.top, 0), total);
+    const t = total > 0 ? scrolled / total : 0;
+    // 5 steps
+    const idx = Math.min(4, Math.floor(t * 5.0));
+    const localT = (t * 5.0) - idx;
+    steps.forEach((s, k) => s.classList.toggle('active', k === idx));
+    items.forEach((s, k) => s.classList.toggle('dim', k !== idx));
+    bar.style.width = (((idx + Math.min(1, localT)) / 5) * 100) + '%';
+  }
+  document.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+</script>
+
+</body>
+</html>

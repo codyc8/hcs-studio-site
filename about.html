@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HCS — About</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .ab-hero{ padding: clamp(40px,8vh,96px) var(--pad) 80px; }
+  .ab-hero .ey{ display:block; margin-bottom: 32px; }
+  .ab-hero h1{
+    font-family: var(--serif); font-weight: 400; margin: 0;
+    font-size: clamp(56px, 11vw, 200px); line-height: 0.92; letter-spacing: -0.025em;
+  }
+  .ab-hero h1 .it{ font-style: italic; color: var(--muted); }
+  .ab-hero p.lede{ margin-top: 48px; max-width: 64ch; font-size: clamp(20px, 1.6vw, 28px); }
+
+  .principles{ padding: 80px var(--pad); border-top: 1px solid var(--rule); }
+  .principles .head{ display:grid; grid-template-columns: 1fr 1.4fr; gap: 40px; margin-bottom: 60px; align-items: end; }
+  .principles h2{
+    font-family: var(--serif); font-weight: 400; margin: 0;
+    font-size: clamp(40px, 6vw, 88px); line-height: 0.96; letter-spacing: -0.02em;
+  }
+  .principles h2 .it{ font-style: italic; color: var(--muted); }
+  .pr-list{ list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
+  .pr-list li{
+    display:grid; grid-template-columns: 100px 1fr 1.4fr; gap: 40px;
+    padding: 36px 0; border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .pr-list .n{ font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
+  .pr-list h3{
+    font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 3vw, 44px);
+    margin: 0; letter-spacing: -0.015em; line-height: 1.05;
+  }
+  .pr-list h3 .it{ font-style: italic; color: var(--muted); }
+  .pr-list p{ color: var(--ink-2); margin: 0; max-width: 50ch; font-size: 15px; }
+
+  .studio{ padding: 100px var(--pad); border-top: 1px solid var(--rule); }
+  .studio .grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .studio h2{
+    font-family: var(--serif); font-weight: 400; margin: 0 0 24px;
+    font-size: clamp(40px, 6vw, 88px); line-height: 0.96; letter-spacing: -0.02em;
+  }
+  .studio h2 .it{ font-style: italic; color: var(--muted); }
+  .studio p{ color: var(--ink-2); font-size: 16px; margin: 0 0 18px; max-width: 56ch; }
+  .studio .stats{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 1px solid var(--rule); margin-top: 32px;
+  }
+  .studio .stat{
+    border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    padding: 28px 24px 28px 0;
+  }
+  .studio .stat:nth-child(2n){ border-right: none; padding-right: 0; padding-left: 24px; }
+  .studio .stat .v{
+    font-family: var(--serif); font-size: clamp(48px, 6vw, 88px); line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .studio .stat .v .it{ font-style: italic; color: var(--accent); }
+  .studio .stat .l{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-top: 12px;
+  }
+
+  .map{
+    border: 1px solid var(--rule); border-radius: 12px;
+    aspect-ratio: 4/5; position: relative; overflow: hidden;
+    background:
+      linear-gradient(180deg, var(--panel-2) 0%, var(--panel) 100%);
+  }
+  .map svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .map .pin{
+    position:absolute; left: 50%; top: 48%;
+    transform: translate(-50%, -50%);
+    width: 16px; height: 16px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 35%, transparent),
+                0 0 0 14px color-mix(in oklab, var(--accent) 18%, transparent);
+  }
+  .map .label{
+    position:absolute; left: 50%; top: 48%;
+    transform: translate(14px, -10px);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink);
+  }
+  .map .coords{
+    position:absolute; left: 24px; bottom: 20px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted);
+  }
+
+  .quote-band{
+    padding: 140px var(--pad); border-top: 1px solid var(--rule); text-align: center;
+  }
+  .quote-band q{
+    quotes: none;
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(40px, 6vw, 88px); line-height: 1.05; letter-spacing: -0.02em;
+    display: block; max-width: 22ch; margin: 0 auto;
+  }
+  .quote-band q::before, .quote-band q::after{ content: ""; }
+  .quote-band q .it{ font-style: italic; color: var(--muted); }
+  .quote-band .who{
+    margin-top: 40px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px){
+    .principles .head, .studio .grid{ grid-template-columns: 1fr; }
+    .pr-list li{ grid-template-columns: 60px 1fr; }
+    .pr-list li p{ grid-column: 2; }
+  }
+</style>
+</head>
+<body data-screen-label="About">
+
+<div id="nav-mount"></div>
+
+<section class="ab-hero">
+  <span class="eyebrow ey">§ About — A small studio with a long memory</span>
+  <h1>A studio for <span class="it">small businesses</span><br/>that want to look <span class="it">permanent.</span></h1>
+  <p class="lede">HCS is a web &amp; systems studio out of Davis, California. We build polished, custom websites and the quiet operational tools that sit behind them — and we keep them running so you don't have to. We work small on purpose: every project is hands-on from the first call to the last deploy.</p>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span><span class="it">Brand-first</span> <span class="dot"></span> Hand-coded<span class="dot"></span> <span class="it">Davis-based</span> <span class="dot"></span> Hosted &amp; cared-for <span class="dot"></span> <span class="it">Done-for-you</span> <span class="dot"></span> Founded @ UC Davis <span class="dot"></span></span>
+    <span><span class="it">Brand-first</span> <span class="dot"></span> Hand-coded<span class="dot"></span> <span class="it">Davis-based</span> <span class="dot"></span> Hosted &amp; cared-for <span class="dot"></span> <span class="it">Done-for-you</span> <span class="dot"></span> Founded @ UC Davis <span class="dot"></span></span>
+  </div>
+</div>
+
+<section class="principles reveal">
+  <div class="head">
+    <span class="eyebrow">§ Principles</span>
+    <h2 class="display">Five things <span class="it">we believe.</span></h2>
+  </div>
+  <ul class="pr-list">
+    <li><span class="n">/01</span><h3>Custom, <span class="it">always.</span></h3><p>Templates are a fast way to look like everyone else. Every HCS site is designed and coded for one business, one audience, one brand.</p></li>
+    <li><span class="n">/02</span><h3>The site should do the <span class="it">talking.</span></h3><p>A small business doesn't need a sales pitch. It needs a website that earns trust the moment a visitor lands.</p></li>
+    <li><span class="n">/03</span><h3>Build it <span class="it">to last.</span></h3><p>We hand-code, we keep dependencies thin, and we host it ourselves. Sites we ship in 2026 will still be loading fast in 2031.</p></li>
+    <li><span class="n">/04</span><h3>Quiet operations.</h3><p>Hosting, monitoring, edits, support — included. You shouldn't have to chase three vendors to change your phone number.</p></li>
+    <li><span class="n">/05</span><h3>Tailored <span class="it">to the budget.</span></h3><p>Every business is different. We scale the engagement — from a one-page launch to a full LMS — to what's actually right for you.</p></li>
+  </ul>
+</section>
+
+<section class="studio reveal">
+  <div class="grid">
+    <div>
+      <span class="eyebrow">§ Studio</span>
+      <h2 class="display" style="margin-top: 18px;">Davis, CA. <span class="it">Founded by three.</span></h2>
+      <p>HCS was founded by three UC Davis students who got tired of seeing local businesses with websites that didn't reflect how good the actual business was. We started reaching out, building real mockups before pitches, and showing up with something to react to instead of a slide deck.</p>
+      <p>That working style stuck. Today we still build the mockup first, still answer our own emails, and still pick up the phone when a client needs something changed.</p>
+      <div class="stats">
+        <div class="stat"><div class="v">2024</div><div class="l">Established since</div></div>
+        <div class="stat"><div class="v">1</div><div class="l">Phone number to call</div></div>
+        <div class="stat"><div class="v"><span class="it">5+</span></div><div class="l">Live client systems</div></div>
+        <div class="stat"><div class="v"><span class="it">100%</span></div><div class="l">Custom designs, no templates</div></div>
+      </div>
+    </div>
+
+    <div class="map">
+      <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+            <circle cx="1.5" cy="1.5" r="1" fill="rgba(232,230,225,0.08)"/>
+          </pattern>
+        </defs>
+
+        <!-- background dot grid -->
+        <rect width="400" height="500" fill="url(#dots)"/>
+
+        <!-- Putah Creek (south of town, east-flowing) -->
+        <path d="M 0 380 C 80 372, 160 388, 240 378 C 320 370, 380 380, 400 378"
+              fill="none" stroke="rgba(124,138,160,0.32)" stroke-width="0.9"/>
+
+        <!-- Interstate 80 (slightly slanted SW → NE, runs south of Davis) -->
+        <path d="M 0 360 C 80 350, 160 332, 240 318 C 310 306, 360 300, 400 296"
+              fill="none" stroke="rgba(232,230,225,0.55)" stroke-width="1.8"/>
+        <text x="40" y="345" fill="rgba(232,230,225,0.7)" font-family="ui-monospace, monospace" font-size="10" letter-spacing="1.6" font-weight="500">I-80</text>
+
+        <!-- Highway 113 (N-S, runs along far-west edge) -->
+        <path d="M 60 0 L 60 500"
+              fill="none" stroke="rgba(232,230,225,0.45)" stroke-width="1.6"/>
+        <text x="40" y="60" fill="rgba(232,230,225,0.6)" font-family="ui-monospace, monospace" font-size="9" letter-spacing="1.4" font-weight="500">113</text>
+
+        <!-- Davis town outline — sits between 113 (west) and east of center, just above I-80 -->
+        <path d="M 110 220
+                 C 112 208, 122 200, 138 200
+                 C 158 198, 180 200, 200 202
+                 C 222 202, 248 204, 268 210
+                 C 286 216, 296 226, 298 240
+                 C 300 254, 290 268, 274 274
+                 C 256 280, 232 280, 210 282
+                 C 188 284, 168 282, 148 278
+                 C 128 274, 112 264, 108 248
+                 C 106 240, 108 228, 110 220 Z"
+              fill="rgba(232,230,225,0.04)" stroke="rgba(232,230,225,0.30)" stroke-width="0.8"/>
+      </svg>
+      <div class="pin"></div>
+      <div class="label">Davis</div>
+      <div class="coords">38°33′N — 121°44′W · GMT−7</div>
+    </div>
+  </div>
+</section>
+
+<section class="quote-band reveal">
+  <span class="eyebrow">§ A working principle</span>
+  <q style="margin-top: 40px;">We build the right thing for your business — and <span class="it">we keep it running</span> so you never have to think about it.</q>
+  <div class="who">— HCS Studio, Davis CA</div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="partials.js"></script>
+<script>
+  document.getElementById('nav-mount').innerHTML = HCS.nav('about');
+  document.getElementById('footer-mount').innerHTML = HCS.footer();
+</script>
+<script src="shared.js"></script>
+</body>
+</html>
