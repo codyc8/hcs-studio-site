@@ -1,14 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HCS — Selected Work</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css" />
-<style>
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="HCS — Selected Work" screenLabel="Work Index" active="work">
+<style is:global>
   .work-hero{ padding: clamp(40px,8vh,96px) var(--pad) 60px; border-bottom: 1px solid var(--rule); }
   .work-hero .grid{ display:grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: end; }
   .work-hero h1{
@@ -65,7 +59,6 @@
   .row .arr{ text-align: right; font-family: var(--mono); font-size: 14px; opacity: 0; transition: opacity .25s ease; }
   .row:hover .arr{ opacity: 1; }
 
-  /* preview that follows cursor */
   .preview{
     position: fixed; pointer-events: none; z-index: 100;
     width: 380px; aspect-ratio: 4/3; border-radius: 8px; border: 1px solid var(--rule-strong);
@@ -75,7 +68,6 @@
   }
   .preview.show{ opacity: 1; transform: translate(-50%, -50%) scale(1); }
 
-  /* placeholder backgrounds reused */
   .art-allthings{ background: radial-gradient(120% 80% at 30% 20%, rgba(201,168,107,0.18), transparent 60%), linear-gradient(180deg, #1a2030 0%, #0c1018 100%); }
   .art-allthings::before{ content:""; position:absolute; inset:0; background: repeating-linear-gradient(0deg, rgba(232,230,225,0.06) 0 1px, transparent 1px 64px), repeating-linear-gradient(90deg, rgba(232,230,225,0.06) 0 1px, transparent 1px 64px); }
   .art-allthings::after{ content:"AT/D"; position:absolute; left: 32px; top: 32px; font-family: var(--serif); font-style: italic; font-size: clamp(48px, 9vw, 120px); color: var(--ink); line-height:1; }
@@ -94,10 +86,6 @@
     .preview{ display:none; }
   }
 </style>
-</head>
-<body data-screen-label="Work Index">
-
-<div id="nav-mount"></div>
 
 <section class="work-hero">
   <span class="eyebrow">§ Work — Selected Index</span>
@@ -129,7 +117,7 @@
     <span></span>
   </div>
 
-  <a class="row" id="robin" href="work/robin.html" data-cat="dash" data-art="art-robin">
+  <a class="row" id="robin" href="/work/robin" data-cat="dash" data-art="art-robin">
     <span class="num">001</span>
     <span class="name">Robin <span class="it">— exec dashboard</span></span>
     <span class="cat">Dashboard · Integrations</span>
@@ -137,7 +125,7 @@
     <span class="arr">→</span>
   </a>
 
-  <a class="row" id="allthings" href="work/robin.html" data-cat="web" data-art="art-allthings">
+  <a class="row" id="allthings" href="/work/allthings" data-cat="web" data-art="art-allthings">
     <span class="num">002</span>
     <span class="name">All Things Design <span class="it">— main site</span></span>
     <span class="cat">Brand · Web</span>
@@ -145,7 +133,7 @@
     <span class="arr">→</span>
   </a>
 
-  <a class="row" id="mysi" href="work/robin.html" data-cat="lms" data-art="art-mysi">
+  <a class="row" id="mysi" href="/work/mysi" data-cat="lms" data-art="art-mysi">
     <span class="num">003</span>
     <span class="name">MySI <span class="it">— LMS &amp; CRM</span></span>
     <span class="cat">LMS · CRM · Funnel</span>
@@ -153,7 +141,7 @@
     <span class="arr">→</span>
   </a>
 
-  <a class="row" id="vas" href="work/robin.html" data-cat="ops" data-art="art-vas">
+  <a class="row" id="vas" href="/work/vas" data-cat="ops" data-art="art-vas">
     <span class="num">004</span>
     <span class="name">VAS Interpretation <span class="it">— staff system</span></span>
     <span class="cat">Auth · Operations</span>
@@ -161,7 +149,7 @@
     <span class="arr">→</span>
   </a>
 
-  <a class="row" id="logistics" href="work/robin.html" data-cat="ops" data-art="art-logistics">
+  <a class="row" id="logistics" href="/work/logistics" data-cat="ops" data-art="art-logistics">
     <span class="num">005</span>
     <span class="name">Logistics Co. <span class="it">— CRM + live tracking</span></span>
     <span class="cat">CRM · Real-time</span>
@@ -172,16 +160,7 @@
 
 <div class="preview ph" id="preview"><div class="ph-art" id="previewArt" style="position:absolute; inset:0;"></div></div>
 
-<div id="footer-mount"></div>
-
-<script src="partials.js"></script>
-<script>
-  document.getElementById('nav-mount').innerHTML = HCS.nav('work');
-  document.getElementById('footer-mount').innerHTML = HCS.footer();
-</script>
-<script src="shared.js"></script>
-
-<script>
+<script is:inline>
 // Filters
 document.querySelectorAll('#filters button').forEach(b => {
   b.addEventListener('click', ()=>{
@@ -213,5 +192,4 @@ document.querySelectorAll('#filters button').forEach(b => {
   });
 })();
 </script>
-</body>
-</html>
+</Base>

@@ -1,0 +1,12 @@
+---
+interface Props {
+  content: string;
+}
+const { content } = Astro.props;
+---
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span set:html={content} />
+    <span set:html={content} />
+  </div>
+</div>

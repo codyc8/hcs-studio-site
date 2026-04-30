@@ -1,14 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HCS — Contact</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css" />
-<style>
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="HCS — Contact" screenLabel="Contact" active="contact">
+<style is:global>
   .ct-hero{ padding: clamp(40px,8vh,96px) var(--pad) 60px; text-align: left; }
   .ct-hero .ey{ display:block; margin-bottom: 28px; }
   .ct-hero h1{
@@ -102,7 +96,6 @@
   }
   .small-note{ color: var(--muted); font-size: 13px; max-width: 50ch; }
 
-  /* Calendly-ish slot picker */
   .scheduler{
     border-top: 1px solid var(--rule);
     margin-top: 24px;
@@ -149,10 +142,6 @@
     .sched-grid, .slots{ grid-template-columns: repeat(3, 1fr); }
   }
 </style>
-</head>
-<body data-screen-label="Contact">
-
-<div id="nav-mount"></div>
 
 <section class="ct-hero">
   <span class="eyebrow ey">§ Contact — Two ways in</span>
@@ -278,16 +267,7 @@
   </div>
 </section>
 
-<div id="footer-mount"></div>
-
-<script src="partials.js"></script>
-<script>
-  document.getElementById('nav-mount').innerHTML = HCS.nav('contact');
-  document.getElementById('footer-mount').innerHTML = HCS.footer();
-</script>
-<script src="shared.js"></script>
-
-<script>
+<script is:inline>
 // Tab switching
 function setTab(tab){
   document.querySelectorAll('#switcher button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
@@ -381,7 +361,7 @@ document.getElementById('form-book').addEventListener('submit', (e)=>{
   e.preventDefault(); submitForm('book', e.currentTarget);
 });
 
-// Scheduler grid (next 10 weekdays)
+// Scheduler grid (next 5 weekdays)
 (function(){
   const days = document.getElementById('days');
   const slots = document.getElementById('slots');
@@ -426,5 +406,4 @@ function showSuccess(which){
   document.getElementById('success-' + which).classList.add('on');
 }
 </script>
-</body>
-</html>
+</Base>

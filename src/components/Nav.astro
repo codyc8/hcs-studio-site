@@ -1,0 +1,21 @@
+---
+interface Props {
+  active: 'home' | 'work' | 'about' | 'contact';
+}
+const { active } = Astro.props;
+const items: [string, string, string][] = [
+  ['/', 'Home', 'home'],
+  ['/work', 'Work', 'work'],
+  ['/about', 'About', 'about'],
+  ['/contact', 'Contact', 'contact'],
+];
+---
+<header class="nav">
+  <a class="brand" href="/" aria-label="HCS home">HCS</a>
+  <nav class="nav-links" aria-label="Primary">
+    {items.map(([href, label, key]) => (
+      <a href={href} class={key === active ? 'active' : undefined}>{label}</a>
+    ))}
+    <a href="/contact#mockup" class="nav-cta mag" style="padding: 6px 5px 6px 10px;">Free mockup →</a>
+  </nav>
+</header>

@@ -1,0 +1,93 @@
+---
+title: "Robin — exec dashboard"
+h1Html: 'Robin <span class="it">— a single<br/>pane of glass.</span>'
+client: "Robin (tryrobin.com)"
+scope: "Unified executive dashboard"
+year: 2025
+tags: ["Dashboard", "Integrations", "Realtime"]
+order: 1
+next: "allthings"
+nextLabel: "All Things Design — main site"
+---
+
+<div class="cs-feature">
+  <div class="dash">
+    <div class="topbar">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="title">Robin <em>command</em></span>
+      <span class="crumbs">Overview / This week</span>
+      <span class="right">● Live</span>
+    </div>
+    <div class="side">
+      <div class="item on"><span class="b"></span> Overview</div>
+      <div class="item"><span class="b"></span> Revenue</div>
+      <div class="item"><span class="b"></span> Pipeline</div>
+      <div class="item"><span class="b"></span> Operations</div>
+      <div class="item"><span class="b"></span> Customer health</div>
+      <div class="item"><span class="b"></span> Integrations</div>
+    </div>
+    <div class="main">
+      <div class="card"><div class="l">MRR — APR 26</div><div class="v"><span class="it">$184.2K</span></div></div>
+      <div class="card"><div class="l">PIPELINE COVERAGE</div><div class="v">3.4×</div></div>
+      <div class="card chart">
+        <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c9a86b" stop-opacity="0.45"/>
+              <stop offset="1" stop-color="#c9a86b" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g stroke="rgba(232,230,225,0.06)">
+            <line x1="0" y1="40" x2="600" y2="40"/>
+            <line x1="0" y1="100" x2="600" y2="100"/>
+            <line x1="0" y1="160" x2="600" y2="160"/>
+          </g>
+          <path d="M0 170 L 50 160 L 100 165 L 150 130 L 200 138 L 250 110 L 300 118 L 350 80 L 400 92 L 450 60 L 500 70 L 550 40 L 600 50 L 600 220 L 0 220 Z" fill="url(#g1)"/>
+          <polyline fill="none" stroke="#c9a86b" stroke-width="1.6" points="0,170 50,160 100,165 150,130 200,138 250,110 300,118 350,80 400,92 450,60 500,70 550,40 600,50"/>
+          <polyline fill="none" stroke="rgba(232,230,225,0.4)" stroke-width="1" stroke-dasharray="3 4" points="0,180 50,175 100,170 150,160 200,155 250,140 300,135 350,120 400,115 450,100 500,95 550,85 600,80"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="cs-body">
+  <div class="grid">
+    <div>
+      <span class="eyebrow ey">§ Brief</span>
+      <h2>The <span class="it">problem.</span></h2>
+    </div>
+    <div>
+      <p>Robin's CEO was reviewing five tools every morning — a CRM, a payments processor, a ticketing tool, a marketing dashboard, and a homegrown spreadsheet — to answer one question: <em>are we okay this week?</em></p>
+      <p>The answer was always there. It was just scattered across five logins and three time zones. We were asked to compress all of it into a single screen the executive team could open with a coffee.</p>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top: 80px;">
+    <div>
+      <span class="eyebrow ey">§ Approach</span>
+      <h2>One <span class="it">screen.</span> Five sources.</h2>
+    </div>
+    <div>
+      <p>We started with a 90-minute working session — the CEO walked us through the actual morning routine, tab by tab. We grouped the questions into four blocks: <em>revenue</em>, <em>pipeline</em>, <em>operations</em>, and <em>customer health</em>. Each block became a card, each card a real-time read from the underlying source.</p>
+      <p>The hard part wasn't visualization — it was reconciliation. Two of the five tools disagreed on what counted as a "customer." We built a thin reconciliation layer in the middle so the dashboard always told one story, even when the upstream tools didn't.</p>
+    </div>
+  </div>
+
+  <div class="grid" style="margin-top: 80px;">
+    <div>
+      <span class="eyebrow ey">§ Outcome</span>
+      <h2>Mornings, <span class="it">solved.</span></h2>
+    </div>
+    <div>
+      <p>The Robin executive team now spends roughly six minutes on the morning review, down from forty. The dashboard runs as a live web app the team opens in a browser tab; we host it, monitor it, and ship updates as the underlying tools change.</p>
+      <p>Six months in, we've added two more sources — a recruiting pipeline and a usage telemetry feed — without touching the front-end design. That's the point: the screen stays calm even as the business grows behind it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pull">
+  <span class="eyebrow">§ Client note</span>
+  <q style="margin-top: 32px;">It used to take forty minutes. Now I open one tab and <span class="it">I know where we are.</span></q>
+  <div style="margin-top: 32px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">— CEO, Robin</div>
+</section>

@@ -1,14 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HCS — About</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css" />
-<style>
+---
+import Base from '../layouts/Base.astro';
+import Marquee from '../components/Marquee.astro';
+
+const aboutMarquee = '<span class="it">Brand-first</span> <span class="dot"></span> Hand-coded<span class="dot"></span> <span class="it">Davis-based</span> <span class="dot"></span> Hosted &amp; cared-for <span class="dot"></span> <span class="it">Done-for-you</span> <span class="dot"></span> Founded @ UC Davis <span class="dot"></span>';
+---
+<Base title="HCS — About" screenLabel="About" active="about">
+<style is:global>
   .ab-hero{ padding: clamp(40px,8vh,96px) var(--pad) 80px; }
   .ab-hero .ey{ display:block; margin-bottom: 32px; }
   .ab-hero h1{
@@ -113,10 +110,6 @@
     .pr-list li p{ grid-column: 2; }
   }
 </style>
-</head>
-<body data-screen-label="About">
-
-<div id="nav-mount"></div>
 
 <section class="ab-hero">
   <span class="eyebrow ey">§ About — A small studio with a long memory</span>
@@ -124,12 +117,7 @@
   <p class="lede">HCS is a web &amp; systems studio out of Davis, California. We build polished, custom websites and the quiet operational tools that sit behind them — and we keep them running so you don't have to. We work small on purpose: every project is hands-on from the first call to the last deploy.</p>
 </section>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span><span class="it">Brand-first</span> <span class="dot"></span> Hand-coded<span class="dot"></span> <span class="it">Davis-based</span> <span class="dot"></span> Hosted &amp; cared-for <span class="dot"></span> <span class="it">Done-for-you</span> <span class="dot"></span> Founded @ UC Davis <span class="dot"></span></span>
-    <span><span class="it">Brand-first</span> <span class="dot"></span> Hand-coded<span class="dot"></span> <span class="it">Davis-based</span> <span class="dot"></span> Hosted &amp; cared-for <span class="dot"></span> <span class="it">Done-for-you</span> <span class="dot"></span> Founded @ UC Davis <span class="dot"></span></span>
-  </div>
-</div>
+<Marquee content={aboutMarquee} />
 
 <section class="principles reveal">
   <div class="head">
@@ -210,14 +198,4 @@
   <q style="margin-top: 40px;">We build the right thing for your business — and <span class="it">we keep it running</span> so you never have to think about it.</q>
   <div class="who">— HCS Studio, Davis CA</div>
 </section>
-
-<div id="footer-mount"></div>
-
-<script src="partials.js"></script>
-<script>
-  document.getElementById('nav-mount').innerHTML = HCS.nav('about');
-  document.getElementById('footer-mount').innerHTML = HCS.footer();
-</script>
-<script src="shared.js"></script>
-</body>
-</html>
+</Base>

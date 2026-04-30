@@ -1,0 +1,173 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  const total = entries.length;
+  return entries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry, total },
+  }));
+}
+
+interface Props {
+  entry: Awaited<ReturnType<typeof getCollection<'work'>>>[number];
+  total: number;
+}
+
+const { entry, total } = Astro.props;
+const { Content } = await entry.render();
+const { h1Html, client, scope, year, tags, order, next, nextLabel } = entry.data;
+
+const orderStr = String(order).padStart(3, '0');
+const totalStr = String(total).padStart(3, '0');
+---
+<Base title={`HCS — ${entry.data.title}`} screenLabel={`Case · ${entry.data.title.split('—')[0].trim()}`} active="work">
+<style is:global>
+  .cs-hero{ padding: clamp(40px,8vh,96px) var(--pad) 60px; }
+  .cs-hero .crumbs{
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 28px;
+  }
+  .cs-hero .crumbs a{ color: var(--ink-2); }
+  .cs-hero h1{
+    font-family: var(--serif); font-weight: 400; margin: 0;
+    font-size: clamp(56px, 11vw, 200px); line-height: 0.92; letter-spacing: -0.025em;
+  }
+  .cs-hero h1 .it{ font-style: italic; color: var(--muted); }
+  .cs-hero .meta-row{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    border-top: 1px solid var(--rule); margin-top: 56px; padding-top: 24px;
+  }
+  .cs-hero .meta-row .k{ font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .cs-hero .meta-row .v{ font-family: var(--serif); font-size: 24px; line-height: 1.1; margin-top: 8px; letter-spacing: -0.01em; }
+
+  .cs-feature{
+    margin: 60px var(--pad) 0;
+    border: 1px solid var(--rule); border-radius: 12px;
+    aspect-ratio: 16/9; position: relative; overflow: hidden;
+    background: linear-gradient(180deg, #0f141d 0%, #0a0e15 100%);
+  }
+  .cs-feature .dash{
+    position:absolute; inset: 6%;
+    display:grid; grid-template-columns: 280px 1fr; grid-template-rows: 60px 1fr; gap: 14px;
+  }
+  .cs-feature .topbar{
+    grid-column: 1 / -1;
+    border: 1px solid var(--rule); border-radius: 8px;
+    background: rgba(20,24,32,0.7);
+    display:flex; align-items: center; padding: 0 16px; gap: 14px;
+  }
+  .cs-feature .topbar .dot{ width: 8px; height: 8px; border-radius: 50%; background: var(--muted); opacity: .7; }
+  .cs-feature .topbar .title{ font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--ink); margin-left: 8px;}
+  .cs-feature .topbar .crumbs{ font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); margin-left: 24px; }
+  .cs-feature .topbar .right{ margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.14em; }
+  .cs-feature .side{
+    border: 1px solid var(--rule); border-radius: 8px;
+    background: rgba(18,22,29,0.7);
+    padding: 14px;
+    display:flex; flex-direction: column; gap: 8px;
+  }
+  .cs-feature .side .item{
+    display:flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2);
+  }
+  .cs-feature .side .item.on{ background: rgba(201,168,107,0.12); color: var(--accent); }
+  .cs-feature .side .item .b{ width: 8px; height: 8px; border-radius: 2px; background: rgba(232,230,225,0.18); }
+  .cs-feature .side .item.on .b{ background: var(--accent); }
+  .cs-feature .main{
+    border: 1px solid var(--rule); border-radius: 8px; background: rgba(14,17,22,0.7);
+    padding: 18px;
+    display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 110px 1fr; gap: 12px;
+  }
+  .cs-feature .card{
+    border: 1px solid var(--rule); border-radius: 6px; padding: 12px;
+    background: rgba(232,230,225,0.02);
+  }
+  .cs-feature .card .l{ font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--muted); }
+  .cs-feature .card .v{ font-family: var(--serif); font-size: 32px; line-height: 1; margin-top: 8px; letter-spacing: -0.01em; }
+  .cs-feature .card .v .it{ font-style: italic; color: var(--accent); }
+  .cs-feature .chart{ grid-column: 1 / -1; position:relative; }
+  .cs-feature .chart svg{ position:absolute; inset: 0; width:100%; height:100%; }
+
+  .cs-body{ padding: 100px var(--pad); border-top: 1px solid var(--rule); margin-top: 80px; }
+  .cs-body .grid{ display:grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+  .cs-body h2{
+    font-family: var(--serif); font-weight: 400; margin: 0;
+    font-size: clamp(32px, 4.5vw, 64px); line-height: 1; letter-spacing: -0.02em;
+  }
+  .cs-body h2 .it{ font-style: italic; color: var(--muted); }
+  .cs-body p{ color: var(--ink-2); font-size: 17px; line-height: 1.6; max-width: 64ch; }
+  .cs-body p + p{ margin-top: 18px; }
+  .cs-body .ey{ display:block; margin-bottom: 16px; }
+
+  .pull{
+    padding: 100px var(--pad); border-top: 1px solid var(--rule);
+  }
+  .pull q{
+    quotes: none;
+    font-family: var(--serif); font-size: clamp(40px, 5.6vw, 88px); line-height: 1.05;
+    letter-spacing: -0.02em; display:block; max-width: 24ch; font-weight: 400;
+  }
+  .pull q::before, .pull q::after{ content:""; }
+  .pull q .it{ font-style: italic; color: var(--muted); }
+
+  .next{ padding: 80px var(--pad); border-top: 1px solid var(--rule); }
+  .next a{
+    display:flex; justify-content:space-between; align-items: end; gap: 24px;
+  }
+  .next .lbl{ font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; }
+  .next h3{
+    font-family: var(--serif); font-weight: 400; margin: 8px 0 0;
+    font-size: clamp(40px, 7vw, 120px); line-height: 0.95; letter-spacing: -0.02em;
+  }
+  .next h3 .it{ font-style: italic; color: var(--muted); }
+  .next .arr{ font-family: var(--mono); font-size: 14px; color: var(--ink-2); }
+
+  @media (max-width: 900px){
+    .cs-hero .meta-row{ grid-template-columns: 1fr 1fr; }
+    .cs-body .grid{ grid-template-columns: 1fr; gap: 24px; }
+    .cs-feature .dash{ grid-template-columns: 1fr; grid-template-rows: 50px auto auto; }
+    .cs-feature .side{ display:none; }
+  }
+</style>
+
+<section class="cs-hero">
+  <div class="crumbs"><a href="/work">← Work</a> · Case Study {orderStr} / {totalStr}</div>
+  <h1 set:html={h1Html} />
+  <div class="meta-row">
+    <div><div class="k">Client</div><div class="v">{client}</div></div>
+    <div><div class="k">Scope</div><div class="v">{scope}</div></div>
+    <div><div class="k">Year</div><div class="v">{year}</div></div>
+    <div>
+      <div class="k">Tags</div>
+      <div class="v" style="font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color: var(--ink-2);">{tags.join(' · ')}</div>
+    </div>
+  </div>
+</section>
+
+<Content />
+
+{next ? (
+  <section class="next">
+    <a href={`/work/${next}`}>
+      <div>
+        <div class="lbl">Next — Case Study {String(order + 1).padStart(3, '0')}</div>
+        <h3>{nextLabel} <span class="it">→</span></h3>
+      </div>
+      <div class="arr">→</div>
+    </a>
+  </section>
+) : (
+  <section class="next">
+    <a href="/work">
+      <div>
+        <div class="lbl">Back to</div>
+        <h3>Selected <span class="it">Work →</span></h3>
+      </div>
+      <div class="arr">→</div>
+    </a>
+  </section>
+)}
+</Base>

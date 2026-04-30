@@ -1,14 +1,12 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HCS — A web &amp; systems studio out of Davis</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css" />
-<style>
+---
+import Base from '../layouts/Base.astro';
+import Marquee from '../components/Marquee.astro';
+
+const homeMarquee = `Custom websites <span class="dot"></span> <span class="it">redesigns</span> <span class="dot"></span> Internal dashboards <span class="dot"></span> <span class="it">CRM &amp; workflow</span> <span class="dot"></span> Hosting &amp; care <span class="dot"></span> <span class="it">Engineered locally in Davis</span> <span class="dot"></span>`;
+---
+<Base title="HCS — A web &amp; systems studio out of Davis" screenLabel="01 Home" active="home">
+
+<style is:global>
   /* === Home-only === */
   .hero{
     padding: clamp(40px, 8vh, 96px) var(--pad) clamp(40px, 8vh, 80px);
@@ -415,10 +413,6 @@
     .svc p{ display:none; }
   }
 </style>
-</head>
-<body data-screen-label="01 Home">
-
-<div id="nav-mount"></div>
 
 <!-- HERO -->
 <section class="hero" data-screen-label="Hero">
@@ -446,8 +440,8 @@
         We design, build, host, and quietly run polished websites &amp; custom systems for small businesses — so you never have to think about your website again.
       </p>
       <div class="ctas">
-        <a href="contact.html#mockup" class="btn mag" data-hot>Request a mockup <span class="arrow"></span></a>
-        <a href="contact.html#book" class="btn btn--ghost mag" data-hot>Book a call <span class="arrow"></span></a>
+        <a href="/contact#mockup" class="btn mag" data-hot>Request a mockup <span class="arrow"></span></a>
+        <a href="/contact#book" class="btn btn--ghost mag" data-hot>Book a call <span class="arrow"></span></a>
       </div>
     </div>
 
@@ -460,12 +454,7 @@
 </section>
 
 <!-- MARQUEE -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Custom websites <span class="dot"></span> <span class="it">redesigns</span> <span class="dot"></span> Internal dashboards <span class="dot"></span> <span class="it">CRM &amp; workflow</span> <span class="dot"></span> Hosting &amp; care <span class="dot"></span> <span class="it">Engineered locally in Davis</span> <span class="dot"></span></span>
-    <span>Custom websites <span class="dot"></span> <span class="it">redesigns</span> <span class="dot"></span> Internal dashboards <span class="dot"></span> <span class="it">CRM &amp; workflow</span> <span class="dot"></span> Hosting &amp; care <span class="dot"></span> <span class="it">Engineered locally in Davis</span> <span class="dot"></span></span>
-  </div>
-</div>
+<Marquee content={homeMarquee} />
 
 <!-- SERVICES -->
 <section class="services reveal" data-screen-label="Services">
@@ -490,12 +479,12 @@
       <span class="eyebrow">§ 03 — Selected Work</span>
       <h2 class="display" style="margin-top: 18px;">Five quiet <span class="it">wins.</span></h2>
     </div>
-    <a href="work.html" class="btn btn--ghost mag" data-hot>All projects <span class="arrow"></span></a>
+    <a href="/work" class="btn btn--ghost mag" data-hot>All projects <span class="arrow"></span></a>
   </div>
 
   <div class="work-grid" id="workGrid">
 
-    <a class="tile" href="work/robin.html">
+    <a class="tile" href="/work/robin">
       <div class="num">— Case Study 001</div>
       <div class="frame ph">
         <div class="ph-art art-robin">
@@ -513,7 +502,7 @@
       </div>
     </a>
 
-    <a class="tile" href="work.html#allthings">
+    <a class="tile" href="/work/allthings">
       <div class="num">— Case Study 002</div>
       <div class="frame ph">
         <div class="ph-art art-allthings"></div>
@@ -524,7 +513,7 @@
       </div>
     </a>
 
-    <a class="tile" href="work.html#mysi">
+    <a class="tile" href="/work/mysi">
       <div class="num">— Case Study 003</div>
       <div class="frame ph">
         <div class="ph-art art-mysi"></div>
@@ -535,7 +524,7 @@
       </div>
     </a>
 
-    <a class="tile" href="work.html#vas">
+    <a class="tile" href="/work/vas">
       <div class="num">— Case Study 004</div>
       <div class="frame ph">
         <div class="ph-art art-vas"></div>
@@ -546,7 +535,7 @@
       </div>
     </a>
 
-    <a class="tile" href="work.html#logistics" style="grid-column: 1 / -1;">
+    <a class="tile" href="/work/logistics" style="grid-column: 1 / -1;">
       <div class="num">— Case Study 005</div>
       <div class="frame ph" style="aspect-ratio: 21/9;">
         <div class="ph-art art-logistics">
@@ -668,13 +657,13 @@
     <h2 class="display">Two ways <span class="it">in.</span></h2>
   </div>
   <div class="contact-split">
-    <a class="contact-card" href="contact.html#mockup">
+    <a class="contact-card" href="/contact#mockup">
       <span class="eyebrow">Primary</span>
       <h3 class="display">Request <span class="it">a mockup.</span></h3>
       <p>Tell us about your business. Within days we'll send back a real, branded mockup &mdash; not a wireframe &mdash; and walk you through it on a call. No commitment.</p>
       <span class="gobtn">Send a brief</span>
     </a>
-    <a class="contact-card" href="contact.html#book">
+    <a class="contact-card" href="/contact#book">
       <span class="eyebrow">Secondary</span>
       <h3 class="display">Book <span class="it">a call.</span></h3>
       <p>Prefer to talk first? 30 minutes on the phone. We learn your business, walk through what's possible, and you leave with a written next step.</p>
@@ -683,16 +672,7 @@
   </div>
 </section>
 
-<div id="footer-mount"></div>
-
-<script src="partials.js"></script>
-<script>
-  document.getElementById('nav-mount').innerHTML = HCS.nav('home');
-  document.getElementById('footer-mount').innerHTML = HCS.footer();
-</script>
-<script src="shared.js"></script>
-
-<script>
+<script is:inline>
 // Hero rotating word
 (function(){
   const words = ["is.","feels.","earns.","performs.","sells."];
@@ -733,11 +713,9 @@
   function update(){
     const rect = section.getBoundingClientRect();
     const winH = window.innerHeight;
-    // total scrollable distance within section: from when its top hits ~10vh to when its bottom passes
     const total = rect.height - winH;
     const scrolled = Math.min(Math.max(-rect.top, 0), total);
     const t = total > 0 ? scrolled / total : 0;
-    // 5 steps
     const idx = Math.min(4, Math.floor(t * 5.0));
     const localT = (t * 5.0) - idx;
     steps.forEach((s, k) => s.classList.toggle('active', k === idx));
@@ -748,8 +726,6 @@
   window.addEventListener('resize', update);
   update();
 })();
-
 </script>
 
-</body>
-</html>
+</Base>
