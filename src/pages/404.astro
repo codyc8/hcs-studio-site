@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="404 — HCS Studio" active="home">
+  <section class="not-found">
+    <span class="eyebrow">404</span>
+    <h1 class="display">Wrong<br/><span class="it">turn.</span></h1>
+    <p>This page doesn't exist. Head back and we'll find what you need.</p>
+    <a href="/" class="gobtn">Back to home</a>
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 var(--pad);
+    max-width: 640px;
+  }
+  .not-found h1 {
+    font-family: var(--serif);
+    font-size: clamp(64px, 12vw, 160px);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin: 12px 0 24px;
+  }
+  .not-found .it { font-style: italic; color: var(--accent); }
+  .not-found p { color: var(--ink-2); margin: 0 0 32px; max-width: 42ch; }
+</style>

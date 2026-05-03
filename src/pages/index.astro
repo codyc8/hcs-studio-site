@@ -241,21 +241,27 @@ const homeMarquee = `Custom websites <span class="dot"></span> <span class="it">
 
   /* process — scroll-driven */
   .process{
-    padding: 140px var(--pad) 100px;
     border-top: 1px solid var(--rule);
+    min-height: 375vh;
   }
   .process .wrap{
+    position: sticky; top: 80px; height: calc(100vh - 80px);
     display:grid; grid-template-columns: 1fr 1.4fr; gap: 60px;
     align-items: start;
+    padding: 36px var(--pad);
+    box-sizing: border-box;
+  }
+  .process .wrap > div:first-child{
+    display: block;
   }
   .process h2{
     font-family: var(--serif); font-weight: 400;
-    font-size: clamp(40px, 6vw, 96px); line-height: 0.96;
-    letter-spacing: -0.02em; margin: 0; max-width: 9ch;
+    font-size: clamp(36px, 5vw, 80px); line-height: 0.96;
+    letter-spacing: -0.02em; margin: 0; max-width: 16ch;
   }
   .process h2 .it{ font-style: italic; color: var(--muted); }
   .process .sticky-stage{
-    position: sticky; top: 80px; height: min(80vh, 720px);
+    position: relative; top: auto; height: min(80vh, 720px);
     border: 1px solid var(--rule);
     border-radius: 8px;
     overflow: hidden;
@@ -268,9 +274,9 @@ const homeMarquee = `Custom websites <span class="dot"></span> <span class="it">
   }
   .stage-step{
     position: absolute; inset: 0; padding: 56px;
-    opacity: 0; transition: opacity .6s ease, transform .6s ease;
+    opacity: 0; transition: opacity .8s cubic-bezier(0.4,0,0.2,1), transform .8s cubic-bezier(0.4,0,0.2,1);
     display:flex; flex-direction: column; justify-content: space-between;
-    transform: translateY(16px);
+    transform: translateY(20px);
   }
   .stage-step.active{ opacity: 1; transform: none; }
   .stage-step .label{
@@ -295,9 +301,9 @@ const homeMarquee = `Custom websites <span class="dot"></span> <span class="it">
   .process-steps{ display:flex; flex-direction: column; gap: 0; }
   .process-step{
     border-top: 1px solid var(--rule);
-    padding: 28px 0;
+    padding: 16px 0;
     display:grid; grid-template-columns: 64px 1fr; gap: 18px; align-items: baseline;
-    transition: opacity .3s ease;
+    transition: opacity .5s cubic-bezier(0.4,0,0.2,1);
   }
   .process-step:last-child{ border-bottom: 1px solid var(--rule); }
   .process-step .n{ font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--muted); }
@@ -305,7 +311,12 @@ const homeMarquee = `Custom websites <span class="dot"></span> <span class="it">
     font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 2.4vw, 36px);
     margin: 0 0 8px; letter-spacing: -0.015em;
   }
-  .process-step p{ font-size: 14px; color: var(--ink-2); margin: 0; max-width: 50ch; }
+  .process-step p{
+    font-size: 14px; color: var(--ink-2); margin: 0; max-width: 50ch;
+    max-height: 80px; overflow: hidden;
+    transition: max-height .5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .process-step.dim p{ max-height: 0; }
   .process-step.dim{ opacity: .35; }
 
   /* why hcs */
